@@ -1,0 +1,762 @@
+/* =========================
+   CONFIGURACIÓN GENERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #080808;
+    color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =========================
+   MENÚ
+========================= */
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 75px;
+
+    padding: 0 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(8, 8, 8, 0.95);
+
+    border-bottom: 1px solid #292929;
+
+    z-index: 1000;
+}
+
+
+/* LOGOTIPO */
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.logo span {
+    color: #c9a45c;
+    font-size: 14px;
+}
+
+
+/* ENLACES */
+
+.menu nav {
+    display: flex;
+    gap: 30px;
+}
+
+.menu nav a {
+    color: #ccc;
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+.menu nav a:hover {
+    color: #c9a45c;
+}
+
+
+/* BOTÓN DEL MENÚ */
+
+.boton-menu {
+    padding: 12px 20px;
+
+    background: #c9a45c;
+
+    color: #080808;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.boton-menu:hover {
+    background: white;
+}
+
+
+/* BOTÓN HAMBURGUESA */
+
+.boton-hamburguesa {
+    display: none;
+
+    background: transparent;
+    border: none;
+
+    color: #c9a45c;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   INICIO
+========================= */
+
+.inicio {
+    min-height: 100vh;
+
+    padding: 150px 8% 100px;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,0.96),
+            rgba(0,0,0,0.75),
+            rgba(0,0,0,0.92)
+        ),
+        url("imagenes/portada.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+
+.contenido-inicio {
+    max-width: 800px;
+}
+
+
+/* TEXTOS PEQUEÑOS */
+
+.pequeno {
+    color: #c9a45c;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 20px;
+}
+
+
+/* TÍTULO */
+
+.inicio h1 {
+    font-size: clamp(80px, 13vw, 170px);
+
+    line-height: 0.78;
+
+    letter-spacing: -8px;
+
+    margin-bottom: 35px;
+}
+
+.inicio h1 span {
+    color: #c9a45c;
+}
+
+
+/* SUBTÍTULO */
+
+.inicio h2 {
+    font-size: 25px;
+
+    font-weight: normal;
+
+    margin-bottom: 12px;
+}
+
+
+.descripcion {
+    color: #aaa;
+
+    font-size: 16px;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+.botones {
+    display: flex;
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+
+.boton-principal,
+.boton-secundario,
+.boton-instagram {
+    display: inline-block;
+
+    padding: 16px 28px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    transition: 0.3s;
+}
+
+
+.boton-principal {
+    background: #c9a45c;
+
+    color: #080808;
+}
+
+.boton-principal:hover {
+    background: white;
+}
+
+
+.boton-secundario {
+    border: 1px solid #555;
+
+    color: white;
+}
+
+.boton-secundario:hover {
+    border-color: #c9a45c;
+
+    color: #c9a45c;
+}
+
+
+/* =========================
+   PRESENTACIÓN
+========================= */
+
+.presentacion {
+    padding: 120px 8%;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 80px;
+
+    border-top: 1px solid #222;
+}
+
+
+.presentacion h2 {
+    font-size: clamp(45px, 6vw, 85px);
+
+    line-height: 0.95;
+
+    margin-bottom: 30px;
+}
+
+
+.presentacion h2 span {
+    color: #c9a45c;
+}
+
+
+.texto {
+    max-width: 500px;
+
+    color: #aaa;
+
+    line-height: 1.8;
+}
+
+
+/* CARACTERÍSTICAS */
+
+.caracteristicas {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 25px;
+}
+
+
+.caracteristicas div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #292929;
+}
+
+
+.caracteristicas strong {
+    color: #c9a45c;
+
+    font-size: 14px;
+}
+
+
+.caracteristicas p {
+    color: #ccc;
+}
+
+
+/* =========================
+   CORTES / GALERÍA
+========================= */
+
+.cortes {
+    padding: 120px 8%;
+
+    background: #0d0d0d;
+}
+
+
+.titulo {
+    margin-bottom: 55px;
+}
+
+
+.titulo h2 {
+    font-size: clamp(45px, 6vw, 80px);
+
+    line-height: 0.95;
+}
+
+
+.titulo h2 span {
+    color: #c9a45c;
+}
+
+
+/* GALERÍA */
+
+.galeria {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+
+.foto {
+    height: 380px;
+
+    overflow: hidden;
+
+    background: #151515;
+}
+
+
+.foto img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: 0.5s;
+}
+
+
+.foto:hover img {
+    transform: scale(1.06);
+}
+
+
+/* INSTAGRAM */
+
+.boton-instagram {
+    margin-top: 40px;
+
+    border: 1px solid #c9a45c;
+
+    color: #c9a45c;
+}
+
+
+.boton-instagram:hover {
+    background: #c9a45c;
+
+    color: #080808;
+}
+
+
+/* =========================
+   SERVICIOS
+========================= */
+
+.servicios {
+    padding: 120px 8%;
+}
+
+
+.lista-servicios {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 0 60px;
+}
+
+
+.servicio {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 28px 0;
+
+    border-bottom: 1px solid #292929;
+}
+
+
+.servicio span {
+    color: #c9a45c;
+
+    font-size: 13px;
+}
+
+
+.servicio p {
+    font-size: 19px;
+}
+
+
+/* =========================
+   SECCIÓN CITA
+========================= */
+
+.cita {
+    padding: 130px 8%;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.80),
+            rgba(0,0,0,0.92)
+        ),
+        url("imagenes/cita.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+}
+
+
+.cita h2 {
+    font-size: clamp(50px, 7vw, 90px);
+
+    line-height: 0.9;
+
+    margin-bottom: 25px;
+}
+
+
+.cita h2 span {
+    color: #c9a45c;
+}
+
+
+.cita > p:not(.pequeno) {
+    color: #aaa;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   UBICACIÓN
+========================= */
+
+.ubicacion {
+    min-height: 600px;
+
+    padding: 120px 8%;
+
+    display: flex;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            90deg,
+            #080808 35%,
+            rgba(8,8,8,0.55)
+        ),
+        url("imagenes/ubicacion.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+}
+
+
+.ubicacion h2 {
+    font-size: clamp(45px, 6vw, 80px);
+
+    line-height: 0.95;
+
+    margin-bottom: 30px;
+}
+
+
+.ubicacion h2 span {
+    color: #c9a45c;
+}
+
+
+.ubicacion p {
+    color: #aaa;
+
+    line-height: 1.8;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   PIE DE PÁGINA
+========================= */
+
+footer {
+    padding: 60px 8%;
+
+    text-align: center;
+
+    border-top: 1px solid #222;
+}
+
+
+footer h3 {
+    font-size: 30px;
+
+    letter-spacing: 3px;
+}
+
+
+footer h3 span {
+    color: #c9a45c;
+}
+
+
+footer > p {
+    color: #777;
+
+    margin-top: 10px;
+}
+
+
+.redes {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    margin: 30px 0;
+}
+
+
+.redes a {
+    transition: 0.3s;
+}
+
+
+.redes a:hover {
+    color: #c9a45c;
+}
+
+
+.derechos {
+    font-size: 12px;
+}
+
+
+/* =========================
+   CELULARES
+========================= */
+
+@media (max-width: 800px) {
+
+    .menu {
+        height: 70px;
+
+        padding: 0 5%;
+    }
+
+
+    .menu nav {
+        display: none;
+
+        position: absolute;
+
+        top: 70px;
+        left: 0;
+
+        width: 100%;
+
+        padding: 20px 0;
+
+        flex-direction: column;
+
+        gap: 0;
+
+        background: #080808;
+
+        border-bottom: 1px solid #292929;
+
+        text-align: center;
+    }
+
+
+    .menu nav.menu-abierto {
+        display: flex;
+    }
+
+
+    .menu nav a {
+        padding: 15px;
+
+        width: 100%;
+    }
+
+
+    .boton-menu {
+        padding: 10px 15px;
+    }
+
+
+    .boton-hamburguesa {
+        display: block;
+    }
+
+
+    .inicio {
+        padding: 120px 7% 80px;
+    }
+
+
+    .inicio h1 {
+        font-size: 85px;
+
+        letter-spacing: -5px;
+    }
+
+
+    .inicio h2 {
+        font-size: 20px;
+    }
+
+
+    .presentacion {
+        grid-template-columns: 1fr;
+
+        padding: 90px 7%;
+
+        gap: 50px;
+    }
+
+
+    .cortes,
+    .servicios,
+    .cita,
+    .ubicacion {
+        padding: 90px 7%;
+    }
+
+
+    .galeria {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+    }
+
+
+    .foto {
+        height: 250px;
+    }
+
+
+    .lista-servicios {
+        grid-template-columns: 1fr;
+    }
+
+
+    .servicio p {
+        font-size: 17px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .logo {
+        font-size: 21px;
+    }
+
+
+    .boton-menu {
+        display: none;
+    }
+
+
+    .inicio h1 {
+        font-size: 70px;
+    }
+
+
+    .galeria {
+        grid-template-columns: 1fr;
+    }
+
+
+    .foto {
+        height: 350px;
+    }
+
+
+    .presentacion h2,
+    .titulo h2,
+    .cita h2,
+    .ubicacion h2 {
+        font-size: 48px;
+    }
+
+}
