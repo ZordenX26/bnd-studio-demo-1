@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>ADMIN BND</title>
+<style>
+body{background:#1a1a1a;color:white;font-family:Arial;display:flex;margin:0}
+.sidebar{width:180px;background:#111;padding:20px;border-right:2px solid #c9a86a;min-height:100vh}
+.sidebar b{color:#c9a86a}
+.main{flex:1;padding:20px}
+.card{border:1px solid #c9a86a;border-radius:10px;padding:15px;margin-top:15px}
+table{width:100%;border-collapse:collapse}
+th{color:#c9a86a;text-align:left;padding:10px}
+td{padding:10px;border-top:1px solid #333}
+input{width:60px;background:#222;color:white;border:1px solid #c9a86a;border-radius:5px;padding:5px;text-align:center}
+.btn{width:100%;background:#c9a86a;color:black;border:none;padding:12px;border-radius:20px;font-weight:bold;margin-top:15px;cursor:pointer}
+.badge{border:1px solid #c9a86a;padding:8px;border-radius:8px;margin-bottom:10px;display:block}
+</style>
+</head>
+<body>
+<div class="sidebar">
+<b>BND STUDIO</b><br><br>
+Dashboard<br><br>Productos<br><br>Pedidos
+</div>
+<div class="main">
+<h2>ADMIN BND - Panel Privado</h2>
+<div class="badge" id="resumen">6 productos activos | Ventas hoy: $1,670 MXN</div>
+<div class="card">
+<h3>Gestion de Productos</h3>
+<table>
+<tr><th>PRODUCTO</th><th>TIPO</th><th>PRECIO</th><th>STOCK</th></tr>
+<tr><td>Reuzel Pink</td><td>Pomada</td><td>$ <input id="p0" type="number" value="250"></td><td><input id="s0" type="number" value="12"></td></tr>
+<tr><td>Suavecito</td><td>Pomada</td><td>$ <input id="p1" type="number" value="280"></td><td><input id="s1" type="number" value="5"></td></tr>
+<tr><td>Uppercut</td><td>Pomada</td><td>$ <input id="p2" type="number" value="300"></td><td><input id="s2" type="number" value="8"></td></tr>
+<tr><td>BND Black</td><td>Gorra</td><td>$ <input id="p3" type="number" value="220"></td><td><input id="s3" type="number" value="3"></td></tr>
+<tr><td>BND Gold</td><td>Gorra</td><td>$ <input id="p4" type="number" value="240"></td><td><input id="s4" type="number" value="2"></td></tr>
+<tr><td>Bendecidos</td><td>Gorra</td><td>$ <input id="p5" type="number" value="230"></td><td><input id="s5" type="number" value="7"></td></tr>
+</table>
+<button class="btn" onclick="guardar()">GUARDAR CAMBIOS</button>
+</div>
+</div>
+<script>
+let productos = JSON.parse(localStorage.getItem('bnd_productos')) || [
+{nombre:"Reuzel Pink",precio:250,stock:12},
+{nombre:"Suavecito",precio:280,stock:5},
+{nombre:"Uppercut",precio:300,stock:8},
+{nombre:"BND Black",precio:220,stock:3},
+{nombre:"BND Gold",precio:240,stock:2},
+{nombre:"Bendecidos",precio:230,stock:7}
+];
+function cargar(){
+productos.forEach((pr,i)=>{
+document.getElementById('p'+i).value=pr.precio;
+document.getElementById('s'+i).value=pr.stock;
+});
+}
+function guardar(){
+productos.forEach((pr,i)=>{
+pr.precio=parseInt(document.getElementById('p'+i).value);
+pr.stock=parseInt(document.getElementById('s'+i).value);
+});
+localStorage.setItem('bnd_productos',JSON.stringify(productos));
+alert('¡Cambios guardados! Precio y stock actualizados');
+}
+cargar();
+</script>
+</body>
+</html>
