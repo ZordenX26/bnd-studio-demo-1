@@ -1,198 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BND Studio | Barber Studio "Bendecidos"</title>
-    <link rel="stylesheet" href="estilos.css">
-    <style>
-    /* --- TIENDA BND --- */
-    :root{--gold:#C9A86A}
-    .tienda{padding:60px 5%;border-top:1px solid #111}
-    .tienda .titulo{margin-bottom:20px}
-    .horario-box{background:#111;border:1px solid #222;border-radius:14px;padding:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:20px 5% 0}
-    .horario-box b{color:var(--gold)} .horario-box small{color:#aaa;line-height:1.5}
-    .grid-tienda{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:20px}
-    .card-t{background:#121212;border:1px solid #222;border-radius:14px;overflow:hidden}
-    .card-t img{width:100%;height:240px;object-fit:cover;background:#1a1a1a}
-    .card-body{padding:14px}.card-body h3{font-size:16px;font-family:'Oswald',sans-serif}
-    .price{color:var(--gold);font-weight:800;margin:6px 0}
-    .desc{color:#777;font-size:12px}
-    .btn-add{width:100%;margin-top:10px;border:1.5px solid var(--gold);background:transparent;color:var(--gold);padding:10px;border-radius:8px;font-weight:800;cursor:pointer}
-    .btn-add:hover{background:var(--gold);color:#000}
-    #btn-cart{position:fixed;bottom:20px;right:20px;z-index:999;background:var(--gold);color:#000;border:0;padding:14px 20px;border-radius:30px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.4)}
-    #drawer{position:fixed;right:-100%;top:0;width:380px;max-width:92%;height:100%;background:#101010;z-index:1000;padding:22px;transition:.35s;border-left:1px solid #222;overflow-y:auto}
-    #drawer.open{right:0}
-    #overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;z-index:900}
-    #overlay.show{display:block}
-    .qty-btn{background:#1e1e1e;border:1px solid #333;color:#fff;width:26px;height:26px;border-radius:4px;cursor:pointer}
-    .btn-wa{width:100%;background:#25D366;color:#000;border:0;padding:14px;border-radius:10px;font-weight:800;cursor:pointer;margin-top:12px}
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BND STUDIO - GORRAS</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:Arial, sans-serif}
+header{padding:15px 30px;border-bottom:1px solid #c9a86a;display:flex;justify-content:space-between}
+header b{color:#c9a86a}.section{padding:40px 20px}.section h2{color:#c9a86a;font-size:32px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:#1a1a1a;border:1px solid #333;border-radius:12px;overflow:hidden}
+.card img{width:100%;height:300px;object-fit:cover}.card-info{padding:15px}
+.card-info h3{font-size:14px}.price{color:#c9a86a;font-weight:bold;margin:8px 0}
+.card button{width:100%;background:transparent;border:1px solid #c9a86a;color:#c9a86a;padding:10px;border-radius:20px;cursor:pointer;font-weight:bold}
+.card button:hover{background:#c9a86a;color:#000}
+</style>
 </head>
 <body>
+<header><b>BND STUDIO</b><span>GORRAS</span></header>
+<div class="section"><h2>GORRAS</h2><div class="grid" id="tienda"></div></div>
 
-    <!-- MENÚ -->
-    <header class="menu">
-        <div class="logo">BND <span>STUDIO</span></div>
-        <nav id="menu-navegacion">
-            <a href="#inicio">Inicio</a>
-            <a href="#cortes">Cortes</a>
-            <a href="#servicios">Servicios</a>
-            <a href="#tienda-productos">Tienda</a>
-            <a href="#tienda-gorras">Gorras</a>
-            <a href="#ubicacion">Ubicación</a>
-        </nav>
-        <a class="boton-menu" href="https://wa.me/525540504822" target="_blank">Agendar cita</a>
-        <button class="boton-hamburguesa" onclick="abrirMenu()">☰</button>
-    </header>
+<script>
+// PRECIOS POR DEFECTO
+let productos = [
+  { id: 'black', nombre: 'GORRA BND BLACK', precio: 300, foto: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500' },
+  { id: 'gold', nombre: 'GORRA BND GOLD', precio: 320, foto: 'https://images.unsplash.com/photo-1534217467420-3e5c0f3d9b5f?w=500' },
+  { id: 'snapback', nombre: 'GORRA BND SNAPBACK', precio: 350, foto: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500' }
+];
 
-    <!-- INICIO -->
-    <section id="inicio" class="inicio">
-        <div class="contenido-inicio">
-            <p class="pequeno">BARBER STUDIO</p>
-            <h1>BND<br><span>STUDIO</span></h1>
-            <h2>Barber Studio "Bendecidos"</h2>
-            <p class="descripcion">Cortes · Barba · Diseños · Elite Service</p>
-            <div class="botones">
-                <a class="boton-principal" href="https://wa.me/525540504822" target="_blank">AGENDAR CITA</a>
-                <a class="boton-secundario" href="#cortes">VER CORTES</a>
-            </div>
-        </div>
-    </section>
+// CARGAR LO QUE GUARDASTE EN EL ADMIN
+let guardados = JSON.parse(localStorage.getItem('bnd_gorras'));
+if(guardados){
+  productos = productos.map(p => {
+    let g = guardados.find(x => x.id === p.id);
+    return g? {...p, precio: g.precio} : p;
+  });
+}
 
-    <!-- PRESENTACIÓN -->
-    <section class="presentacion">
-        <div>
-            <p class="pequeno">BND STUDIO</p>
-            <h2>MÁS QUE UN<br><span>CORTE.</span></h2>
-            <p class="texto">Un espacio dedicado al estilo, la precisión y la atención al detalle.</p>
-        </div>
-        <div class="caracteristicas">
-            <div><strong>01</strong><p>Elite Service</p></div>
-            <div><strong>02</strong><p>Diseños Free Style</p></div>
-            <div><strong>03</strong><p>Barbería</p></div>
-        </div>
-    </section>
-
-    <!-- HORARIO REAL CORREGIDO - AUTOMATICO -->
-    <div class="horario-box">
-        <div><b>🕘 HORARIO</b><br><small>Lunes a Domingo<br>9:00 a.m. - 6:00 p.m.<br><span id="estado-horario" style="font-weight:800">● Cargando...</span></small></div>
-        <div><b>📍 BND STUDIO</b><br><small>Amecameca, EdoMex<br>@bndstudio1 • 938 seguidores<br>+52 55 4050 4822</small></div>
-        <div><b>💳 PAGOS</b><br><small>Transferencia / Efectivo<br>Pedidos directo a WhatsApp</small></div>
+function render(){
+  document.getElementById('tienda').innerHTML = productos.map(p => `
+    <div class="card">
+      <img src="${p.foto}">
+      <div class="card-info">
+        <h3>${p.nombre}</h3>
+        <div class="price">$${p.precio} MXN</div>
+        <button onclick="window.open('https://wa.me/521000000000?text=Quiero%20${p.nombre}','_blank')">AGREGAR</button>
+      </div>
     </div>
-
-    <!-- GALERÍA -->
-    <section id="cortes" class="cortes">
-        <div class="titulo"><p class="pequeno">NUESTRO TRABAJO</p><h2>NUESTROS<br><span>CORTES.</span></h2></div>
-        <div class="galeria">
-            <div class="foto"><img src="imagenes/corte1.jpg" alt="Corte BND"></div>
-            <div class="foto"><img src="imagenes/corte2.jpg" alt="Corte BND"></div>
-            <div class="foto"><img src="imagenes/corte3.jpg" alt="Corte BND"></div>
-            <div class="foto"><img src="imagenes/corte4.jpg" alt="Corte BND"></div>
-            <div class="foto"><img src="imagenes/corte5.jpg" alt="Corte BND"></div>
-        </div>
-        <a class="boton-instagram" href="https://www.instagram.com/bndstudio1/" target="_blank">VER INSTAGRAM</a>
-    </section>
-
-    <!-- SERVICIOS -->
-    <section id="servicios" class="servicios">
-        <div class="titulo"><p class="pequeno">LO QUE HACEMOS</p><h2>NUESTROS<br><span>SERVICIOS.</span></h2></div>
-        <div class="lista-servicios">
-            <div class="servicio"><span>01</span><p>Fades</p></div>
-            <div class="servicio"><span>02</span><p>Afeitado</p></div>
-            <div class="servicio"><span>03</span><p>Afeitado con navaja</p></div>
-            <div class="servicio"><span>04</span><p>Acondicionamiento de barba</p></div>
-            <div class="servicio"><span>05</span><p>Rasurado de cabeza</p></div>
-            <div class="servicio"><span>06</span><p>Tintura de cabello</p></div>
-            <div class="servicio"><span>07</span><p>Depilación de ceja</p></div>
-            <div class="servicio"><span>08</span><p>Diseños Free Style</p></div>
-            <div class="servicio"><span>09</span><p>Venta de productos</p></div>
-        </div>
-    </section>
-
-    <!-- TIENDA PRODUCTOS -->
-    <section id="tienda-productos" class="tienda">
-        <div class="titulo"><p class="pequeno">TIENDA OFICIAL</p><h2>PRODUCTOS<br><span>BND.</span></h2></div>
-        <div class="grid-tienda" id="grid-productos"></div>
-    </section>
-
-    <!-- TIENDA GORRAS APARTE -->
-    <section id="tienda-gorras" class="tienda" style="background:#0a0a0a">
-        <div class="titulo"><p class="pequeno">BND MERCH</p><h2>GORRAS<br></span></h2></div>
-        <div class="grid-tienda" id="grid-gorras"></div>
-    </section>
-
-    <!-- CITA -->
-    <section class="cita">
-        <p class="pequeno">¿LISTO PARA TU PRÓXIMO CORTE?</p>
-        <h2>AGENDA TU<br><span>CITA.</span></h2>
-        <p>Reserva tu cita directamente por WhatsApp.</p>
-        <a class="boton-principal" href="https://wa.me/525540504822" target="_blank">WHATSAPP</a>
-    </section>
-
-    <!-- UBICACIÓN -->
-    <section id="ubicacion" class="ubicacion">
-        <div>
-            <p class="pequeno">ENCUÉNTRANOS</p>
-            <h2>VISÍTANOS EN<br><span>Amecameca.</span></h2>
-            <p>📍 Amecameca de Juárez, Estado de México</p>
-            <p>📞 +52 55 4050 4822</p>
-            <p>📸 @bndstudio1</p>
-            <a class="boton-secundario" href="https://www.google.com/maps/search/?api=1&query=Barber+Studio+Bendecidos+Amecameca" target="_blank">CÓMO LLEGAR</a>
-        </div>
-    </section>
-
-    <footer><h3>BND <span>STUDIO</span></h3><p>Barber Studio "Bendecidos"</p><div class="redes"><a href="https://www.instagram.com/bndstudio1/" target="_blank">Instagram</a><a href="https://wa.me/525540504822" target="_blank">WhatsApp</a></div><p class="derechos">© 2026 BND Studio</p></footer>
-
-    <!-- CARRITO FLOTANTE -->
-    <button id="btn-cart" onclick="toggleCart()">🛒 (<span id="cCount">0</span>) $<span id="cTotalH">0</span></button>
-    <div id="overlay" onclick="toggleCart()"></div>
-    <div id="drawer">
-        <h2 style="font-family:'Oswald'">TU PEDIDO</h2>
-        <p style="color:#666;font-size:12px;margin:6px 0 18px">Se envía directo al WhatsApp de BND</p>
-        <div id="cartItems"></div>
-        <div style="margin-top:20px;display:flex;justify-content:space-between;font-size:20px;font-weight:800"><span>Total</span><span>$<span id="cTotal">0</span></span></div>
-        <input id="custName" placeholder="Tu nombre" style="width:100%;margin-top:14px;padding:13px;background:#070707;border:1px solid #2a2a2a;color:#fff;border-radius:8px">
-        <button class="btn-wa" onclick="sendWA()">ENVIAR POR WHATSAPP</button>
-        <button onclick="toggleCart()" style="width:100%;background:none;border:0;color:#666;margin-top:14px;cursor:pointer">Seguir comprando</button>
-    </div>
-
-    <script>
-        function abrirMenu(){document.getElementById("menu-navegacion").classList.toggle("menu-abierto");}
-        const WA_NUMBER = "525540504822";
-        const PRODUCTS = [
-          {id:1,name:"POMADA BND",price:200,cat:"grid-productos",desc:"Fijación fuerte",img:"imagenes/corte1.jpg"},
-          {id:2,name:"POLVO TEXTURIZADOR",price:250,cat:"grid-productos",desc:"Volumen instantáneo",img:"imagenes/corte2.jpg"},
-          {id:3,name:"MASCARILLA BLACK",price:150,cat:"grid-productos",desc:"Limpieza profunda",img:"imagenes/corte3.jpg"},
-          {id:4,name:"GORRA BND BLACK",price:300,cat:"grid-gorras",desc:"Bordada premium",img:"imagenes/corte4.jpg"},
-          {id:5,name:"GORRA BND GOLD",price:320,cat:"grid-gorras",desc:"Edición Gold",img:"imagenes/corte5.jpg"},
-          {id:6,name:"GORRA BND SNAPBACK",price:350,cat:"grid-gorras",desc:"Ajustable",img:"imagenes/corte1.jpg"},
-        ];
-        let CART=[];
-        function renderProducts(){PRODUCTS.forEach(p=>{const el=document.getElementById(p.cat);if(!el)return;el.innerHTML+=`<div class="card-t"><img src="${p.img}"><div class="card-body"><h3>${p.name}</h3><div class="desc">${p.desc}</div><div class="price">$${p.price} MXN</div><button class="btn-add" onclick="addToCart(${p.id})">AGREGAR</button></div></div>`;});}
-        function addToCart(id){const pr=PRODUCTS.find(x=>x.id===id);const f=CART.find(x=>x.id===id);if(f)f.qty++;else CART.push({...pr,qty:1});updateCart();toggleCart(true)}
-        function updateCart(){document.getElementById('cCount').innerText=CART.reduce((a,b)=>a+b.qty,0);const total=CART.reduce((a,b)=>a+b.price*b.qty,0);document.getElementById('cTotal').innerText=total;document.getElementById('cTotalH').innerText=total;let html="";CART.forEach((c,i)=>{html+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #222"><div><b style="font-size:13px">${c.name}</b><br><small style="color:#888">$${c.price} x ${c.qty}</small></div><div><button class="qty-btn" onclick="CART[${i}].qty++;updateCart()">+</button> <button class="qty-btn" onclick="CART[${i}].qty--;if(CART[${i}].qty<=0)CART.splice(${i},1);updateCart()">-</button></div></div>`});document.getElementById('cartItems').innerHTML=html||"<p style='color:#666'>Vacío</p>";}
-        function toggleCart(f){const d=document.getElementById('drawer'),o=document.getElementById('overlay');if(f===true){d.classList.add('open');o.classList.add('show');return;}d.classList.toggle('open');o.classList.toggle('show')}
-        function sendWA(){if(!CART.length)return alert("Carrito vacío");const name=document.getElementById('custName').value||"Cliente";let msg=`Hola BND Studio 👋%0AQuiero pedir:%0A%0A`;CART.forEach(c=>{msg+=`• ${c.name} x${c.qty} - $${c.price*c.qty}%0A`});msg+=`%0ATotal: $${CART.reduce((a,b)=>a+b.price*b.qty,0)} MXN%0ANombre: ${name}%0A%0AVengo de bndstudio.mx`;window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');}
-        renderProducts();
-
-        // --- HORARIO AUTOMATICO BND ---
-        function actualizarHorario(){
-          const el = document.getElementById('estado-horario');
-          if(!el) return;
-          const ahora = new Date();
-          const h = ahora.getHours();
-          const abierto = h >= 9 && h < 18; // 9am a 6pm
-          if(abierto){
-            el.textContent = '● Abierto ahora';
-            el.style.color = '#25D366';
-          } else {
-            el.textContent = '● Cerrado ahora';
-            el.style.color = '#ff4d4d';
-          }
-        }
-        actualizarHorario();
-        setInterval(actualizarHorario, 60000); // revisa cada minuto
-    </script>
+  `).join('');
+}
+render();
+</script>
 </body>
 </html>
